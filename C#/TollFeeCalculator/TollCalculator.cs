@@ -41,13 +41,13 @@ public class TollCalculator
     private bool IsTollFreeVehicle(IVehicle vehicle)
     {
         if (vehicle == null) return false;
-        String vehicleType = vehicle.GetVehicleType();
+        String vehicleType = vehicle.GetVehicleType();        
         return vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Military.ToString());
+                   vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
+                   vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
+                   vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
+                   vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
+                   vehicleType.Equals(TollFreeVehicles.Military.ToString());
     }
 
     public int GetTollFee(DateTime date, IVehicle vehicle)
@@ -57,16 +57,17 @@ public class TollCalculator
         int hour = date.Hour;
         int minute = date.Minute;
 
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-        else return 0;
+        if (hour == 6 && minute <= 29) return 8;
+        if (hour == 6 && minute >= 30) return 13;
+        if (hour == 7) return 18;
+        if (hour == 8 && minute <= 29) return 13;    
+        if ((hour == 8 && minute >= 30) || (hour >= 9 && hour <= 14)) return 8;
+        if (hour == 15 && minute <= 29) return 13;
+        if ((hour == 15 && minute >= 30) || hour == 16) return 18;
+        if (hour == 17) return 13;
+        if (hour == 18 && minute <= 29) return 8;
+
+        return 0;
     }
 
     private bool IsTollFreeDate(DateTime date)
