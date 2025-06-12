@@ -7,18 +7,18 @@ Console.WriteLine($"----------------------------------\n");
 
 var calc = new TollCalculator();
 var car = new Car();
-var passingDateTime = DateTime.Now;
-int tollFee = calc.GetTollFee(passingDateTime, car);
+var passingDate = DateTime.Now;
+int tollFee = calc.GetTollFee(passingDate, car);
 
 Console.WriteLine($"Vehicle: {car.GetVehicleType()}");
-Console.WriteLine($"Passing date: {passingDateTime.ToLongDateString()} - {passingDateTime.ToShortTimeString()}");
+Console.WriteLine($"Passing date: {passingDate.ToLongDateString()} - {passingDate.ToShortTimeString()}");
 Console.WriteLine($"Calculated fees: {tollFee}");
 
 var motorbike = new Motorbike();
-var bikeTollFee = calc.GetTollFee(passingDateTime, motorbike);
+var bikeTollFee = calc.GetTollFee(passingDate, motorbike);
 
 Console.WriteLine($"-------------------\n");
 Console.WriteLine($"Vehicle: {motorbike.GetVehicleType()}");
-Console.WriteLine($"Passing date: {passingDateTime.ToLongDateString()} - {passingDateTime.ToShortTimeString()}");
+Console.WriteLine($"Passing date: {passingDate.ToLongDateString()} - {passingDate.ToShortTimeString()}");
 Console.WriteLine($"Calculated fees: {bikeTollFee}\n");
 
