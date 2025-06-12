@@ -4,6 +4,6 @@ public class Military : IVehicle
 {
     public string GetVehicleType()
     {
-        return "Military";
+        return TollFreeVehicles.Military.ToString();
     }
 }

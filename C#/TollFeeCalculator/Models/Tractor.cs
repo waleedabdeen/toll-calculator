@@ -4,6 +4,6 @@ public class Tractor : IVehicle
 {
     public string GetVehicleType()
     {
-        return "Tractor";
+        return TollFreeVehicles.Tractor.ToString();
     }
 }

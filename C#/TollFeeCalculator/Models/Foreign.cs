@@ -4,6 +4,6 @@ public class Foreign : IVehicle
 {
     public string GetVehicleType()
     {
-        return "Foreign";
+        return TollFreeVehicles.Foreign.ToString();
     }
 }

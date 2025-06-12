@@ -21,4 +21,3 @@ Console.WriteLine($"-------------------\n");
 Console.WriteLine($"Vehicle: {motorbike.GetVehicleType()}");
 Console.WriteLine($"Passing date: {passingDate.ToLongDateString()} - {passingDate.ToShortTimeString()}");
 Console.WriteLine($"Calculated fees: {bikeTollFee}\n");
-

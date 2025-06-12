@@ -4,6 +4,6 @@ public class Diplomat : IVehicle
 {
     public string GetVehicleType()
     {
-        return "Diplomat";
+        return TollFreeVehicles.Diplomat.ToString();
     }
 }
