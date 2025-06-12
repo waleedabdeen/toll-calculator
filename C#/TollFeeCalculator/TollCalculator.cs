@@ -69,29 +69,38 @@ public class TollCalculator
         else return 0;
     }
 
-    private Boolean IsTollFreeDate(DateTime date)
+    private bool IsTollFreeDate(DateTime date)
     {
-        int year = date.Year;
         int month = date.Month;
         int day = date.Day;
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
 
-        if (year == 2013)
+        //If month is July then set day to zero for lookup in the hashset
+        if (month == 7) day = 0;
+
+        var holidays = new HashSet<(int month, int day)>
         {
-            if (month == 1 && day == 1 ||
-                month == 3 && (day == 28 || day == 29) ||
-                month == 4 && (day == 1 || day == 30) ||
-                month == 5 && (day == 1 || day == 8 || day == 9) ||
-                month == 6 && (day == 5 || day == 6 || day == 21) ||
-                month == 7 ||
-                month == 11 && day == 1 ||
-                month == 12 && (day == 24 || day == 25 || day == 26 || day == 31))
-            {
-                return true;
-            }
-        }
-        return false;
+            (1,1),
+            (3,28),
+            (3,29),
+            (4,1),
+            (4,30),
+            (5,1),
+            (5,8),
+            (5,9),
+            (6,5),
+            (6,6),
+            (6,21),
+            (7,0),
+            (11,1),
+            (12,24),
+            (12,25),
+            (12,26),
+            (12,31)
+        };
+
+        return holidays.Contains((month, day));
     }
 
     private enum TollFreeVehicles
