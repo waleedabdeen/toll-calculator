@@ -15,12 +15,14 @@ public class SingleChargeRuleTest
 	public void ShouldOnlyBeChargedOnceAnHour()
 	{
 		//Setup
-		var passingDateLowerEdge = new DateTime(2025, 6, 12, 6, 0, 0);
-		var passingDateMiddle = new DateTime(2025, 6, 12, 6, 29, 0);
-		var passingDateUpperEdge = new DateTime(2025, 6, 12, 6, 59, 59);
+		DateTime[] passingDates = [
+			new DateTime(2025, 6, 12, 6, 0, 0),
+			new DateTime(2025, 6, 12, 6, 29, 0),
+			new DateTime(2025, 6, 12, 6, 59, 59),
+		];
 
 		//Act
-		int tollFees = calc.GetTollFee([passingDateLowerEdge, passingDateMiddle, passingDateUpperEdge], vehicle);
+		int tollFees = calc.GetTollFee(passingDates, vehicle);
 
 		//Assert
 		Assert.Equal(13, tollFees);
@@ -30,12 +32,14 @@ public class SingleChargeRuleTest
 	public void ShouldOnlyBeChargedOnceAnHourOverThreePeriods()
 	{
 		//Setup
-		var passingDateLowerEdge = new DateTime(2025, 6, 12, 14, 50, 0);
-		var passingDateMiddle = new DateTime(2025, 6, 12, 15, 10, 0);
-		var passingDateUpperEdge = new DateTime(2025, 6, 12, 15, 49, 59);
+		DateTime[] passingDates = [
+			new DateTime(2025, 6, 12, 14, 50, 0),
+			new DateTime(2025, 6, 12, 15, 10, 0),
+			new DateTime(2025, 6, 12, 15, 49, 59),
+		];
 
 		//Act
-		int tollFees = calc.GetTollFee([passingDateLowerEdge, passingDateMiddle, passingDateUpperEdge], vehicle);
+		int tollFees = calc.GetTollFee(passingDates, vehicle);
 
 		//Assert
 		Assert.Equal(18, tollFees);
