@@ -1,10 +1,9 @@
-﻿namespace TollFeeCalculator
+﻿namespace TollFeeCalculator;
+
+public class Car : Vehicle
 {
-    public class Car : Vehicle
+    public String GetVehicleType()
     {
-        public String GetVehicleType()
-        {
-            return "Car";
-        }
+        return "Car";
     }
 }
