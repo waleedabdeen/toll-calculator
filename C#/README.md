@@ -12,5 +12,13 @@ To develop and run the program you will need the following
 ## Dev & Run
 
 To run the app from the cli
-1. Make sure that you are in the directgory `C#/TollFreeCalculator`
+1. Make sure that you are in the directgory `C#/TollFreeCalculator/`
 2. Run the app using `dotnet run`
+
+
+## Test
+
+This project has automated tests written in xUnit
+
+1. Make sure that you are in the directgory `C#/TollFreeCalculator.Test/`
+2. Run the tests using `dotnet test`
