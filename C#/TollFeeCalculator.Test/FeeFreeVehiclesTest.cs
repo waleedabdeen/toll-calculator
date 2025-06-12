@@ -28,7 +28,7 @@ public class FeeFreeVehiclesTest
     public void ShouldReturnZeroForTractor()
     {
         //Setup
-        IVehicle vehicle = new Foreign();
+        IVehicle vehicle = new Tractor();
 
         //Act
         int calculateFee = calc.GetTollFee(passingDate, vehicle);
@@ -41,7 +41,7 @@ public class FeeFreeVehiclesTest
     public void ShouldReturnZeroForEmergency()
     {
         //Setup
-        IVehicle vehicle = new Motorbike();
+        IVehicle vehicle = new Emergency();
 
         //Act
         int calculateFee = calc.GetTollFee(passingDate, vehicle);
