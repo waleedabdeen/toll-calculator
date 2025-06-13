@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./C#
+        working-directory: "./C#"
         
     steps:
     - uses: actions/checkout@v4
