@@ -39,11 +39,13 @@ public class TollCalculator
 
 	public int GetTollFee(DateTime[] dates, IVehicle vehicle)
 	{
-		DateTime intervalStart = dates[0];
+		var orderedDates = dates.OrderBy(e => e.TimeOfDay).ToArray();
+
+		DateTime intervalStart = orderedDates[0];
 		int highestFeeInHour = GetTollFee(intervalStart, vehicle);
 		int totalFee = 0;
 
-		foreach (DateTime nextDate in dates)
+		foreach (DateTime nextDate in orderedDates)
 		{
 			int nextFee = GetTollFee(nextDate, vehicle);
 			double diffInMinutes = (nextDate - intervalStart).TotalMinutes;
