@@ -12,6 +12,9 @@ on:
 jobs:
   build:  
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./C#"
     
     steps:
     - uses: actions/checkout@v4
@@ -21,10 +24,7 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: "./C#"
     - name: Build
       run: dotnet build --no-restore
-      working-directory: "./C#"
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: "./C#/TollFreeCalculator.Test"
