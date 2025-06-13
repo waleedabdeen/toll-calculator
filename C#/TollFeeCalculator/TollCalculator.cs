@@ -32,7 +32,7 @@ public class TollCalculator
 	 * Calculate the total toll fee for one day
 	 *
 	 *
-	 * @param dates   - date and time of all passes on one day
+	 * @param dates   - date and time of all passes on one day which should be ordered asc
 	 * @param vehicle - the vehicle
 	 * @return - the total toll fee for that day
 	 */
@@ -87,23 +87,15 @@ public class TollCalculator
 	private bool IsTollFreeVehicle(IVehicle vehicle)
 	{
 		if (vehicle == null) return false;
+
 		string vehicleType = vehicle.GetVehicleType();
 
-		if (vehicleType.Equals(TollPayingVehiclesEnum.Car.ToString()) ||
-			vehicleType.Equals(TollPayingVehiclesEnum.Other.ToString()))
-			return false;
-
-		if (vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
+		return vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
 			vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
 			vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
 			vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
 			vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-			vehicleType.Equals(TollFreeVehicles.Military.ToString()))
-			return true;
-
-		//Log unknown vehicles to handle later
-		Console.WriteLine($"WARNING: Unknown vehicle type: {vehicleType}");
-		return false;
+			vehicleType.Equals(TollFreeVehicles.Military.ToString());
 	}
 
 	private bool IsTollFreeDate(DateTime date)
@@ -116,7 +108,7 @@ public class TollCalculator
 
 		if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
 
-		//If month is July then set day to zero for lookup in the hashset
+		//Skip day check for holiday month (July)
 		if (month == 7) day = 0;
 
 		var holidays = new HashSet<(int month, int day)>
