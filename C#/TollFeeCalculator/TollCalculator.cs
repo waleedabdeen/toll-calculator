@@ -7,14 +7,36 @@ public class TollCalculator
 	const int L2_CHARGES = 13;
 	const int L3_CHARGES = 18;
 
+	int _year = 0;
+
+	public int Year
+	{
+		get => _year;
+		private set
+		{
+			if (value != 0)
+			{
+				_year = value;
+				dynamicHolidays = Utils.GetDynamicHolidaysMonthDay(_year);
+			}
+		}
+	}
+
+	HashSet<(int month, int day)> dynamicHolidays;
+
+	public TollCalculator()
+	{
+		dynamicHolidays = new HashSet<(int month, int day)>();
+	}
 	/**
-     * Calculate the total toll fee for one day
-     *
-     *
-     * @param dates   - date and time of all passes on one day
-     * @param vehicle - the vehicle
-     * @return - the total toll fee for that day
-     */
+	 * Calculate the total toll fee for one day
+	 *
+	 *
+	 * @param dates   - date and time of all passes on one day
+	 * @param vehicle - the vehicle
+	 * @return - the total toll fee for that day
+	 */
+
 	public int GetTollFee(DateTime[] dates, IVehicle vehicle)
 	{
 		DateTime intervalStart = dates[0];
@@ -68,26 +90,29 @@ public class TollCalculator
 		string vehicleType = vehicle.GetVehicleType();
 
 		if (vehicleType.Equals(TollPayingVehiclesEnum.Car.ToString()) ||
-				vehicleType.Equals(TollPayingVehiclesEnum.Other.ToString()))
+			vehicleType.Equals(TollPayingVehiclesEnum.Other.ToString()))
 			return false;
 
 		if (vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
-				vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
-				vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
-				vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
-				vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-				vehicleType.Equals(TollFreeVehicles.Military.ToString()))
+			vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
+			vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
+			vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
+			vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
+			vehicleType.Equals(TollFreeVehicles.Military.ToString()))
 			return true;
 
 		//Log unknown vehicles to handle later
-		Console.WriteLine($"Unknown vehicle type: {vehicleType}");
+		Console.WriteLine($"WARNING: Unknown vehicle type: {vehicleType}");
 		return false;
 	}
 
 	private bool IsTollFreeDate(DateTime date)
 	{
+		int year = date.Year;
 		int month = date.Month;
 		int day = date.Day;
+
+		if (!IsValidYear(year)) throw new ArgumentException("All dates must be the same year");
 
 		if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
 
@@ -97,24 +122,30 @@ public class TollCalculator
 		var holidays = new HashSet<(int month, int day)>
 		{
 			(1,1),
-			(3,28),
-			(3,29),
-			(4,1),
 			(4,30),
 			(5,1),
-			(5,8),
-			(5,9),
 			(6,5),
 			(6,6),
-			(6,21),
 			(7,0),
-			(11,1),
 			(12,24),
 			(12,25),
 			(12,26),
 			(12,31)
 		};
 
-		return holidays.Contains((month, day));
+		return holidays.Contains((month, day)) || dynamicHolidays.Contains((month, day));
+	}
+
+	private bool IsValidYear(int value)
+	{
+		if (value == 0) return false;
+
+		if (Year == 0)
+		{
+			Year = value;
+			return true;
+		}
+
+		return value == Year;
 	}
 }
